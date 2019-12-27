@@ -170,6 +170,19 @@ select * from menus where idMenu in (select idmenu from permissions where idrole
 
 update users set idrole = 2 where username = 'MCNERIO98';
 
+--funcion para actualizar el departamento de un usuario, devuelve el valor 1, es utilizada para el metodo Operaciones.consultar
+CREATE OR REPLACE FUNCTION updateDepto(fiduser integer, fiddepto integer) RETURNS integer AS $$
+BEGIN
+update deptobyusers set iddepto = fiddepto where iduser = fiduser;
+RETURN 1;
+END; $$
+
+--Funcio para borrar ambos registros de las tablas DeptoByUsers y Users
+CREATE OR REPLACE FUNCTION deleteDeptoByUsers(fiduser integer) RETURNS integer AS $$
+BEGIN
+delete from deptobyusers where iduser = fiduser;
+delete from users where iduser = fiduser;
+RETURN 1;
 
  
 
